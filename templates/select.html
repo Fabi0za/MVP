@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>Select Chatbot</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 1em;
+        }
+        a {
+            display: inline-block;
+            margin-bottom: 1em;
+            padding: 15px 30px; /* updated padding to provide a larger click area */
+            text-align: center; /* align the text in the center */
+            min-width: 200px; /* set a minimum width to ensure buttons are of same size */
+            text-decoration: none;
+            color: #000;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to FinFluent</h1>
+    <p>Please select a chatbot:</p>
+    <a href="/agent_chatbot">Agent Chatbot</a>
+    <br>
+    <a href="/customer_chatbot">Customer Chatbot</a>
+</body>
+</html>

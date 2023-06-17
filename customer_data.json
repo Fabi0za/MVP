@@ -1,0 +1,63 @@
+{
+    "1": {
+        "name": "Max Mustermann",
+        "age": 34,
+        "address": "Musterstraße 1, 12345 Berlin",
+        "occupation": "Software Developer"
+    },
+    "2": {
+        "name": "Erika Mustermann",
+        "age": 29,
+        "address": "Musterstraße 2, 67890 Hamburg",
+        "occupation": 
+        "Data Scientist"
+    },
+    "3": {
+        "name": "Karl Schmidt",
+        "age": 45,
+        "address": "Hauptstraße 12, 34567 Munich",
+        "occupation": "Civil Engineer"
+    },
+    "4": {
+        "name": "Anna Becker",
+        "age": 31,
+        "address": "Bahnhofstraße 21, 78901 Frankfurt",
+        "occupation": "Marketing Specialist"
+    },
+    "5": {
+        "name": "Hans Müller",
+        "age": 38,
+        "address": "Schlossallee 32, 23456 Stuttgart",
+        "occupation": "Graphic Designer"
+    },
+    "6": {
+        "name": "Marie Schneider",
+        "age": 28,
+        "address": "Parkstraße 45, 56789 Düsseldorf",
+        "occupation": "Project Manager"
+    },
+    "7": {
+        "name": "Thomas Wagner",
+        "age": 52,
+        "address": "Friedrichstraße 54, 89012 Bremen",
+        "occupation": "Accountant"
+    },
+    "8": {
+        "name": "Julia Meyer",
+        "age": 26,
+        "address": "Königstraße 67, 12348 Leipzig",
+        "occupation": "Web Developer"
+    },
+    "9": {
+        "name": "Friedrich Bauer",
+        "age": 43,
+        "address": "Dorfstraße 76, 23489 Dresden",
+        "occupation": "Product Manager"
+    },
+    "10": {
+        "name": "Elisabeth Klein",
+        "age": 36,
+        "address": "Waldstraße 89, 56780 Hanover",
+        "occupation": "HR Specialist"
+    }
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FinFluent Agent Chatbot</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+        }
+        #chatbox {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        #userInput {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #textInput {
+            width: 80%;
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+        }
+        #buttonInput {
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: none;
+            background-color: #000000;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+        #buttonInput:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <p id="botStarterMessage">{{ bot_message }}</p>
+    </div>
+    <form id="messageForm" onsubmit="event.preventDefault(); sendAgentMessage();">
+        <div id="userInput">
+            <input id="textInput" type="text" name="msg" placeholder="Message" autocomplete="off">
+            <input id="buttonInput" type="button" value="Send" onclick="sendAgentMessage()">
+        </div>
+    </form>
+    <script>
+        function appendMessage(message, isJson = false) {
+            var chatbox = document.getElementById("chatbox");
+            var messageElement;
+            if (isJson) {
+                messageElement = document.createElement("pre");
+            } else {
+                messageElement = document.createElement("p");
+            }
+            messageElement.textContent = message;
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
+
+            // Log the appended message to the console
+            console.log("Appended Message:", message);
+        }
+
+        function sendAgentMessage() {
+            console.log("Sending agent message...");
+            var userInput = document.getElementById("textInput");
+            var userText = userInput.value;
+            userInput.value = "";
+
+            appendMessage("You: " + userText);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/get_agent_response?msg=" + encodeURIComponent(userText), true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);  // Parse the JSON response
+
+                    if (response.customer_info) {
+                        // If there's customer info, format and display it
+                        appendMessage("Bot: " + formatJson(response.customer_info), true);
+                        appendMessage("Bot: " + response.additional_message);
+                    } else {
+                        // If not, display the response as usual
+                        appendMessage("Bot: " + response.response);
+                    }
+
+                    // Log the response to the console
+                    console.log("Bot Response:", response);
+                }
+            };
+            xhr.send();
+        }
+
+
+
+        function formatJson(json) {
+            var customer_id = json.customer_id || "unknown";  // assuming the customer_id is in the JSON
+            var formatted = "Here's the customer data of customer " + customer_id + ":\n";
+            for (var property in json) {
+                if (property !== 'customer_id') {  // we've already included the customer_id in the message
+                    formatted += '  ' + property + ': ' + json[property] + '\n';
+                }
+            }
+            return formatted;
+        }
+
+    </script>
+</body>
+</html>
