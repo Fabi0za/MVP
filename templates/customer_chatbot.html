@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>FinFluent Agent Chatbot</title>
+    <title>FinFluent Agent Chatbot</title>  <!-- Title of the webpage -->
+    <!-- CSS styles for styling the doc -->
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -99,11 +100,11 @@
         }
     </style>
 </head>
-<body>
-    <div id="chatbox"></div>
-    <form id="userInput" onsubmit="event.preventDefault(); sendCustomerMessage();">
-        <input id="textInput" type="text" name="msg" placeholder="Message" autocomplete="off">
-        <input id="buttonInput" type="button" value="Send" onclick="sendCustomerMessage()">
+<body> <!-- Body of the HTML document -->
+    <div id="chatbox"></div> <!-- Div element for the chatbox -->
+    <form id="userInput" onsubmit="event.preventDefault(); sendCustomerMessage();"> 
+        <input id="textInput" type="text" name="msg" placeholder="Message" autocomplete="off"> <!-- User message input field -->
+        <input id="buttonInput" type="button" value="Send" onclick="sendCustomerMessage()"> <!-- Button to send the message. When clicked, it calls the sendCustomerMessage function -->
     </form>
     <script>
         var chatbox = document.getElementById("chatbox");
@@ -116,6 +117,7 @@
 
         var hasAskedIfMoreQuestions = false;
 
+        /* Handles sending of the customer's message to the server and displaying the response */
         function sendCustomerMessage() {
             var userInput = document.getElementById("textInput");
             var userText = userInput.value;
@@ -123,8 +125,7 @@
 
             if (awaitingAdditionalFeedback) {
                 appendMessage("You provided additional feedback: " + userText, "user");
-                // Here you can send the additional feedback to the server, like you do for the customer's message
-                awaitingAdditionalFeedback = false; // Reset flag
+                awaitingAdditionalFeedback = false; 
             } else {
                 appendMessage(userText, "user");
 
@@ -146,20 +147,20 @@
                 xhr.send(JSON.stringify({ msg: userText }));
             }
         }
-
+        /* Displays the buttons for asking if the user has more questions */
         function showMoreQuestionButtons() {
             moreQuestionButtons.innerHTML = `
                 <button onclick="handleMoreQuestions('Yes')">Yes</button>
                 <button onclick="handleMoreQuestions('No')">No</button>
             `;
-            moreQuestionButtons.style.display = "flex"; // show the buttons
+            moreQuestionButtons.style.display = "flex"; // showing the buttons
             chatbox.appendChild(moreQuestionButtons);
             chatbox.scrollTop = chatbox.scrollHeight;
         }
-
+        /* Handles the user's response to the "Do you have any more questions?" prompt */
         function handleMoreQuestions(answer) {
-            moreQuestionButtons.style.display = "none"; // hide the buttons
-            feedbackButtons.style.display = "none"; // also hide feedback buttons
+            moreQuestionButtons.style.display = "none"; // hiding the buttons agains
+            feedbackButtons.style.display = "none"; // also hiding feedback buttons
             appendMessage(answer, "user"); // User's response to "Do you have any more questions?"
 
             if (answer === 'No') {
@@ -171,6 +172,7 @@
             }
         }
 
+         /* Takes a message and its sender as parameters and appends the message to the chatbox. */
         function appendMessage(message, sender) {
             var messageElement = document.createElement("div");
             messageElement.classList.add("message", sender);
@@ -190,6 +192,7 @@
             chatbox.scrollTop = chatbox.scrollHeight;
         }
 
+        /* Returns the current time as a string in the format "HH:MM" */
         function getCurrentTimeString() {
             var now = new Date();
             var hours = now.getHours();
@@ -201,6 +204,7 @@
             return hours + ':' + minutes;
         }
 
+        /* Displays the emoji buttons for user feedback */
         function showFeedbackButtons() {
             feedbackButtons.innerHTML = `
                 <button onclick="handleFeedback('😃')">😃</button>
@@ -214,6 +218,7 @@
             chatbox.scrollTop = chatbox.scrollHeight;
         }
 
+        /* Creates and displays an input field for additional feedback */
         function showAdditionalFeedbackInput() {
             var feedbackInput = document.createElement("input");
             feedbackInput.setAttribute("id", "additionalFeedbackInput");
@@ -232,6 +237,7 @@
             chatbox.scrollTop = chatbox.scrollHeight;
         }
 
+        /* Handles the user's feedback and asks for additional feedback if necessary */
         function handleFeedback(feedback) {
             feedbackButtons.style.display = "none";
 
@@ -244,12 +250,16 @@
             awaitingAdditionalFeedback = true;
         }
 
+        /* Handles the user's additional feedback */
         function submitAdditionalFeedback() {
             var additionalFeedback = document.getElementById("additionalFeedbackInput").value;
             appendMessage("You provided additional feedback: " + additionalFeedback, "user");
         }
 
-        appendMessage("Hello, how may I assist you today?", "bot");
+        //Displaying the initial bot message
+        var botMessage = "{{ bot_message }}";
+        appendMessage(botMessage, "bot"); 
+
     </script>
 </body>
 </html>

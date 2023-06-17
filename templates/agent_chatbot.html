@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>FinFluent Agent Chatbot</title>
-    <style>
+    <title>FinFluent Agent Chatbot</title>  <!-- Title of the webpage -->
+    <!-- CSS styles for styling the doc -->
+    <style> 
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
@@ -47,17 +48,19 @@
         }
     </style>
 </head>
-<body>
-    <div id="chatbox">
-        <p id="botStarterMessage">{{ bot_message }}</p>
+<body> <!-- Body of the HTML document -->
+    <div id="chatbox"> <!-- Div element for the chatbox -->
+        <p id="botStarterMessage">{{ bot_message }}</p> <!-- Placing the starter message from the chat, this is being sent throught the corresponding Flask path -->
     </div>
     <form id="messageForm" onsubmit="event.preventDefault(); sendAgentMessage();">
-        <div id="userInput">
-            <input id="textInput" type="text" name="msg" placeholder="Message" autocomplete="off">
-            <input id="buttonInput" type="button" value="Send" onclick="sendAgentMessage()">
+        <div id="userInput">  <!-- Div element for user input -->
+            <input id="textInput" type="text" name="msg" placeholder="Message" autocomplete="off"> <!-- Input element for user to enter their message -->
+            <input id="buttonInput" type="button" value="Send" onclick="sendAgentMessage()"> <!-- Button to send the message. When clicked, it calls the sendAgentMessage function -->
+
         </div>
     </form>
     <script>
+         /* appendMessage appends a message to the chatbox */
         function appendMessage(message, isJson = false) {
             var chatbox = document.getElementById("chatbox");
             var messageElement;
@@ -73,7 +76,7 @@
             // Log the appended message to the console
             console.log("Appended Message:", message);
         }
-
+         /* sendAgentMessage gets the user's input, sends it to the server, and handles the server's response */
         function sendAgentMessage() {
             console.log("Sending agent message...");
             var userInput = document.getElementById("textInput");
@@ -86,26 +89,25 @@
             xhr.open("GET", "/get_agent_response?msg=" + encodeURIComponent(userText), true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    var response = JSON.parse(xhr.responseText);  // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);  //Parsing the JSON response
 
                     if (response.customer_info) {
-                        // If there's customer info, format and display it
+                        //If there's customer info, format and display it
                         appendMessage("Bot: " + formatJson(response.customer_info), true);
                         appendMessage("Bot: " + response.additional_message);
                     } else {
-                        // If not, display the response as usual
+                        //If not, display the response as usual
                         appendMessage("Bot: " + response.response);
                     }
 
-                    // Log the response to the console
+                    //Log the response to the console
                     console.log("Bot Response:", response);
                 }
             };
             xhr.send();
         }
 
-
-
+        /* formatJson formats customer info in the server's response */
         function formatJson(json) {
             var customer_id = json.customer_id || "unknown";  // assuming the customer_id is in the JSON
             var formatted = "Here's the customer data of customer " + customer_id + ":\n";
