@@ -51,7 +51,7 @@ def create_chatbot():
     return agent_chatbot, customer_chatbot
 
 def init():
-    #Initializing dictionarires with keywords and responses, these will be used from the spacy model to link keywords to responses
+    #Initializing dictionaries with keywords and responses, these will be used from the spacy model to link keywords to responses
     global keywords, responses
     #Creating the two chatbots
     agent_chatbot, customer_chatbot = create_chatbot()
